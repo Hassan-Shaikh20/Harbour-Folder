@@ -63,10 +63,10 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: var(--secondary-bg);
+    background: rgba(10, 10, 10, 0.98);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
@@ -564,6 +564,12 @@ section {
     border-color: var(--border-hover);
 }
 
+.filter-btn.active {
+    background: var(--primary-gradient);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+}
+
 .filter-btn:hover::before,
 .filter-btn.active::before {
     opacity: 1;
@@ -588,8 +594,8 @@ section {
     border-radius: 20px;
     border: 1px solid var(--border-color);
     text-align: center;
-    transition: all 0.3s ease;
-    transform: perspective(1000px) rotateX(0deg);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: perspective(1000px) rotateX(0deg) scale(1);
     opacity: 1;
     position: relative;
     overflow: hidden;
@@ -620,8 +626,9 @@ section {
 
 .skill-card.hidden {
     opacity: 0;
-    transform: scale(0.8);
+    transform: perspective(1000px) rotateX(0deg) scale(0.8);
     pointer-events: none;
+    visibility: hidden;
 }
 
 .skill-icon {
@@ -1057,10 +1064,11 @@ section {
         top: 100%;
         left: 0;
         width: 100%;
-        background: var(--secondary-bg);
+        background: rgba(10, 10, 10, 0.98);
         flex-direction: column;
         padding: 2rem;
-        border-top: 1px solid var(--border-color);
+        border-top: 1px solid rgba(139, 92, 246, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;

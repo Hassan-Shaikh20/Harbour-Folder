@@ -33,31 +33,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const skillsFilterBtns = document.querySelectorAll('.filter-btn');
     const skillCards = document.querySelectorAll('.skill-card');
 
-    skillsFilterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filter = this.getAttribute('data-filter');
-            
-            // Remove active class from all buttons
-            skillsFilterBtns.forEach(button => button.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-
-            // Filter skill cards
-            skillCards.forEach(card => {
-                const category = card.getAttribute('data-category');
+    // Ensure all elements are found
+    if (skillsFilterBtns.length > 0 && skillCards.length > 0) {
+        skillsFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
                 
-                if (filter === 'all' || category === filter) {
-                    card.classList.remove('hidden');
-                    // Trigger skill bar animation
-                    setTimeout(() => {
-                        animateSkillBar(card);
-                    }, 300);
-                } else {
-                    card.classList.add('hidden');
-                }
+                // Remove active class from all buttons
+                skillsFilterBtns.forEach(button => button.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Filter skill cards with smooth animation
+                skillCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        // Show the card
+                        card.classList.remove('hidden');
+                        // Trigger skill bar animation after transition
+                        setTimeout(() => {
+                            animateSkillBar(card);
+                        }, 300);
+                    } else {
+                        // Hide the card
+                        card.classList.add('hidden');
+                    }
+                });
             });
         });
-    });
+
+        // Initialize skill bars on page load for visible cards
+        setTimeout(() => {
+            skillCards.forEach(card => {
+                if (!card.classList.contains('hidden')) {
+                    animateSkillBar(card);
+                }
+            });
+        }, 500);
+    }
 
     // Portfolio Section Filtering
     const portfolioFilterBtns = document.querySelectorAll('.portfolio-filter-btn');
