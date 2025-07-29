@@ -6,11 +6,11 @@
 }
 
 :root {
-    /* Dark Theme Color Palette */
-    --primary-bg: #0a0a0a;
-    --secondary-bg: #111827;
-    --card-bg: #1f2937;
-    --surface-bg: #374151;
+    /* Light Theme Colors (Default) */
+    --primary-bg: #ffffff;
+    --secondary-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --surface-bg: #f1f5f9;
     
     /* Accent Colors */
     --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -19,6 +19,31 @@
     --quaternary-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     --gold-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
     --purple-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    
+    /* Text Colors */
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --text-muted: #6b7280;
+    --text-accent: #3b82f6;
+    
+    /* Glow Effects */
+    --glow-blue: 0 0 30px rgba(59, 130, 246, 0.2);
+    --glow-purple: 0 0 30px rgba(147, 51, 234, 0.2);
+    --glow-pink: 0 0 30px rgba(236, 72, 153, 0.2);
+    --glow-green: 0 0 30px rgba(34, 197, 94, 0.2);
+    
+    /* Border Colors */
+    --border-color: rgba(59, 130, 246, 0.1);
+    --border-hover: rgba(59, 130, 246, 0.3);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    /* Dark Theme Color Palette */
+    --primary-bg: #0a0a0a;
+    --secondary-bg: #111827;
+    --card-bg: #1f2937;
+    --surface-bg: #374151;
     
     /* Text Colors */
     --text-primary: #ffffff;
@@ -31,6 +56,10 @@
     --glow-purple: 0 0 30px rgba(147, 51, 234, 0.3);
     --glow-pink: 0 0 30px rgba(236, 72, 153, 0.3);
     --glow-green: 0 0 30px rgba(34, 197, 94, 0.3);
+    
+    /* Border Colors */
+    --border-color: rgba(96, 165, 250, 0.1);
+    --border-hover: rgba(96, 165, 250, 0.3);
 }
 
 html {
@@ -43,6 +72,7 @@ body {
     color: var(--text-primary);
     background: var(--primary-bg);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -56,12 +86,16 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(17, 24, 39, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(96, 165, 250, 0.1);
+    border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(17, 24, 39, 0.95);
 }
 
 .nav-container {
@@ -123,6 +157,62 @@ body {
     width: 80%;
 }
 
+/* Theme Toggle */
+.theme-toggle {
+    margin-left: 1rem;
+}
+
+.theme-btn {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--border-color);
+    background: var(--card-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--tertiary-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+}
+
+.theme-btn:hover {
+    border-color: var(--border-hover);
+    transform: scale(1.1);
+    box-shadow: var(--glow-blue);
+}
+
+.theme-btn:hover::before {
+    opacity: 0.1;
+}
+
+.theme-btn i {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.theme-btn:hover i {
+    color: var(--text-primary);
+    transform: rotate(360deg);
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -144,10 +234,14 @@ body {
     height: 100vh;
     display: flex;
     align-items: center;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     position: relative;
     overflow: hidden;
+}
+
+[data-theme="dark"] .hero {
+    background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
 }
 
 .hero::before {
@@ -413,11 +507,16 @@ section {
     padding: 2rem 1.5rem;
     background: var(--card-bg);
     border-radius: 20px;
-    border: 1px solid rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--border-color);
     transform: perspective(1000px) rotateX(0deg);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .stat {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .stat::before {
@@ -574,13 +673,18 @@ section {
     background: var(--card-bg);
     padding: 2.5rem 2rem;
     border-radius: 20px;
-    border: 1px solid rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--border-color);
     text-align: center;
     transition: all 0.3s ease;
     transform: perspective(1000px) rotateX(0deg);
     opacity: 1;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .skill-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .skill-card::before {
@@ -954,7 +1058,11 @@ section {
     background: var(--card-bg);
     padding: 2.5rem;
     border-radius: 20px;
-    border: 1px solid rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .contact-form {
     box-shadow: var(--glow-blue);
 }
 
@@ -966,7 +1074,7 @@ section {
 .form-group textarea {
     width: 100%;
     padding: 15px 20px;
-    border: 2px solid rgba(96, 165, 250, 0.1);
+    border: 2px solid var(--border-color);
     border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -994,7 +1102,7 @@ section {
     color: var(--text-secondary);
     text-align: center;
     padding: 2rem 0;
-    border-top: 1px solid rgba(96, 165, 250, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 /* Animations */
@@ -1035,6 +1143,15 @@ section {
         display: flex;
     }
 
+    .theme-toggle {
+        margin-left: 0.5rem;
+    }
+
+    .theme-btn {
+        width: 40px;
+        height: 40px;
+    }
+
     .nav-menu {
         position: fixed;
         top: 100%;
@@ -1043,7 +1160,7 @@ section {
         background: var(--secondary-bg);
         flex-direction: column;
         padding: 2rem;
-        border-top: 1px solid rgba(96, 165, 250, 0.1);
+        border-top: 1px solid var(--border-color);
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
